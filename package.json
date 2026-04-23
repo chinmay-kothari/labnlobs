@@ -5,8 +5,5 @@
     "build": "node scripts/inject-env.mjs",
     "dev": "node scripts/inject-env.mjs && npx --yes serve -l 5173 .",
     "start": "npx --yes serve -l 5173 ."
-  },
-  "devDependencies": {
-    "dotenv": "^16.4.5"
   }
 }
