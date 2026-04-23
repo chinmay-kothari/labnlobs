@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Labnlobs is the screen-less AI companion for kids. Natural chat, real play, no blue light. Join the waitlist for tactile AI." />
+  <title>Labnlobs | The Vibrant Screen-Less AI Companion</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lexend:wght@300;400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .tactile-press {
+      box-shadow: 0 4px 0 0 rgba(0,0,0,0.2);
+      transition: all 0.1s ease;
+    }
+    .tactile-press:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 0 rgba(0,0,0,0.2);
+    }
+    .soft-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
+    }
+    html { scroll-behavior: smooth; }
+    /* Centered page column: max 1200px, breathing room on large screens */
+    .content-wrap {
+      width: 100%;
+      max-width: 1080px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .content-wrap { padding-left: 1.5rem; padding-right: 1.5rem; }
+    }
+    @media (min-width: 1024px) {
+      .content-wrap { padding-left: 2rem; padding-right: 2rem; }
+    }
+  </style>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary": "#FF6B00",
+            "secondary": "#00D1FF",
+            "tertiary": "#7FFF00",
+            "accent-yellow": "#FFD700",
+            "on-primary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "on-background": "#1A1A1A",
+            "surface": "#FFFFFF",
+            "surface-variant": "#F0F9FF",
+            "error": "#FF4B4B",
+            "primary-container": "#FFEDD5",
+            "secondary-container": "#E0F7FF",
+            "tertiary-container": "#F2FFD6",
+          },
+          "borderRadius": {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "24px",
+            "md": "24px",
+            "xs": "4px",
+            "unit": "8px",
+            "sm": "12px",
+            "margin-mobile": "20px",
+            "lg": "40px",
+            "margin-desktop": "48px",
+            "xl": "64px"
+          },
+          "fontFamily": {
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-md": ["Lexend"],
+            "body-lg": ["Lexend"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-caps": ["Lexend"]
+          },
+          "fontSize": {
+            "headline-xl": ["40px", { "lineHeight": "1.1", "fontWeight": "800" }],
+            "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+            "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "800" }],
+            "label-caps": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700" }]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    body { min-height: max(884px, 100dvh); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-surface font-body-md text-on-background overflow-x-hidden selection:bg-accent-yellow selection:text-black">
+  <a href="#hero" class="fixed left-4 top-0 z-[200] -translate-y-[150%] focus:translate-y-4 rounded-lg bg-white px-4 py-2 font-bold text-black shadow transition-transform">Skip to content</a>
+  <div class="fixed inset-0 soft-grain z-[100] pointer-events-none" aria-hidden="true"></div>
+
+  <header class="fixed top-0 w-full z-50 border-b border-zinc-200 bg-white/95 backdrop-blur-md h-16">
+    <div class="content-wrap h-full flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <a href="#hero" class="text-2xl font-extrabold text-primary tracking-tight rounded-lg" aria-label="Labnlobs home">LABNLOBS</a>
+      </div>
+      <a href="#updates" class="bg-primary text-white px-6 py-2 rounded-full font-display text-sm font-bold tracking-tight hover:brightness-110 transition-all shadow-sm active:scale-95">Pre-order</a>
+    </div>
+  </header>
+
+  <nav class="fixed top-16 w-full z-40 bg-white border-b border-zinc-100 overflow-x-auto no-scrollbar whitespace-nowrap" aria-label="Section">
+    <div class="content-wrap flex items-center gap-6 h-12">
+      <a class="text-sm font-bold text-primary border-b-2 border-primary pb-3 mt-3" href="#hero">All</a>
+      <a class="text-sm font-medium text-zinc-500 hover:text-black transition-colors" href="#product">Product</a>
+      <a class="text-sm font-medium text-zinc-500 hover:text-black transition-colors" href="#mission">Mission</a>
+      <a class="text-sm font-medium text-zinc-500 hover:text-black transition-colors" href="#lobs">Lobs</a>
+      <a class="text-sm font-medium text-zinc-500 hover:text-black transition-colors" href="#updates">Updates</a>
+    </div>
+  </nav>
+
+  <main class="pt-28">
+    <section id="hero" class="relative py-xl flex flex-col items-center text-center overflow-hidden bg-surface-variant scroll-mt-32">
+      <div class="absolute top-0 right-0 w-80 h-80 bg-accent-yellow/40 rounded-full blur-3xl -mr-20 -mt-20" aria-hidden="true"></div>
+      <div class="absolute bottom-0 left-0 w-80 h-80 bg-secondary/30 rounded-full blur-3xl -ml-20 -mb-20" aria-hidden="true"></div>
+      <div class="content-wrap relative z-10 flex flex-col items-center text-center">
+        <div class="max-w-lg">
+          <span class="font-label-caps text-white bg-primary px-4 py-1.5 rounded-full text-xs mb-6 inline-block border-2 border-black rotate-[-2deg]">TACTILE AI FOR KIDS</span>
+          <h1 class="font-headline-xl text-headline-xl text-black mb-md leading-none">The Screen-Less AI Friend for Huge Imaginations!</h1>
+          <p class="font-body-lg text-body-lg text-zinc-700 mb-lg font-medium">Spark wonder with natural chat and real play. No screens, just pure fun.</p>
+          <a href="#updates" class="inline-block bg-secondary text-white font-headline-md text-headline-md px-10 py-5 rounded-2xl tactile-press w-full sm:w-auto border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">Join the Waitlist!</a>
+        </div>
+        <div class="mt-xl w-full max-w-[17.5rem] sm:max-w-[19rem] lg:max-w-[20rem]">
+          <div class="relative w-full aspect-video rounded-[2.25rem] bg-white border-4 border-black overflow-hidden p-3.5 sm:p-4 flex items-center justify-center shadow-[8px_8px_0px_0px_#FF6B00]">
+            <img
+              alt="Labnlobs device: a cream-colored wedge with a blue light strip and a friendly orange character on top"
+              class="rounded-xl w-full h-full object-contain"
+              width="800"
+              height="450"
+              src="images/hero-product.png"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="product" class="py-lg bg-white border-y-4 border-black scroll-mt-32">
+      <div class="content-wrap flex flex-col gap-6">
+        <div class="p-8 bg-tertiary-container rounded-3xl border-4 border-black">
+          <h2 class="font-headline-lg text-headline-lg text-black mb-sm">Bye-Bye Blue Light! 🚫</h2>
+          <p class="font-body-md text-zinc-800 font-medium">
+            Tired of tablet tantrums? Labnlobs swaps addictive apps for physical play. Kids get the magic of AI without the zombie-stare.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-error p-5 rounded-2xl border-4 border-black flex flex-col gap-2 items-center text-center">
+            <span class="material-symbols-outlined text-white text-3xl">desktop_access_disabled</span>
+            <p class="font-label-caps text-white text-[12px]">0% SCREENS</p>
+          </div>
+          <div class="bg-secondary p-5 rounded-2xl border-4 border-black flex flex-col gap-2 items-center text-center">
+            <span class="material-symbols-outlined text-white text-3xl">touch_app</span>
+            <p class="font-label-caps text-white text-[12px]">100% HANDS-ON</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lobs" class="py-xl bg-accent-yellow/10 scroll-mt-32">
+      <div class="content-wrap">
+        <h2 class="font-headline-lg text-headline-lg text-center mb-lg text-black">Meet your new best friends!</h2>
+        <div class="flex flex-col gap-gutter">
+        <div class="bg-secondary-container rounded-[2.5rem] p-8 border-4 border-black flex flex-col items-center text-center shadow-[8px_8px_0px_0px_#00D1FF]">
+          <div class="w-32 h-32 bg-secondary rounded-full mb-6 border-4 border-black flex items-center justify-center" aria-hidden="true">
+            <span class="material-symbols-outlined text-6xl text-white">travel_explore</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-black mb-2">Explorer Lob</h3>
+          <p class="font-body-md text-zinc-700 font-medium">Travel the world from your bedroom! Discover oceans, jungles, and space through epic stories.</p>
+          <div class="mt-6 flex flex-wrap justify-center gap-2">
+            <span class="px-4 py-1 bg-white rounded-full text-xs font-bold border-2 border-black">Wild Animals</span>
+            <span class="px-4 py-1 bg-white rounded-full text-xs font-bold border-2 border-black">Volcanoes</span>
+          </div>
+        </div>
+        <div class="bg-tertiary-container rounded-[2.5rem] p-8 border-4 border-black flex flex-col items-center text-center shadow-[8px_8px_0px_0px_#7FFF00]">
+          <div class="w-32 h-32 bg-tertiary rounded-full mb-6 border-4 border-black flex items-center justify-center" aria-hidden="true">
+            <span class="material-symbols-outlined text-6xl text-black">menu_book</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md text-black mb-2">Sage Lob</h3>
+          <p class="font-body-md text-zinc-700 font-medium">The wisest companion for bedtime tales and brain-teasers. Makes thinking super fun!</p>
+          <div class="mt-6 flex flex-wrap justify-center gap-2">
+            <span class="px-4 py-1 bg-white rounded-full text-xs font-bold border-2 border-black">Mystery Tales</span>
+            <span class="px-4 py-1 bg-white rounded-full text-xs font-bold border-2 border-black">Brain Puzzles</span>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="bg-black py-xl text-white rounded-t-[3rem] border-t-4 border-white scroll-mt-32">
+      <div class="content-wrap">
+        <h2 class="font-headline-lg text-headline-lg mb-xl text-center text-accent-yellow">3 Easy Steps to Play</h2>
+        <div class="space-y-xl">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-full bg-primary text-white border-2 border-white flex items-center justify-center shrink-0 font-black text-xl shadow-[4px_4px_0px_0px_white]">1</div>
+          <div>
+            <h4 class="font-headline-md text-xl mb-1 text-white">Snap It!</h4>
+            <p class="text-zinc-400 font-body-md">Pop a Lob onto the hub. It clicks with a magic magnet!</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-full bg-secondary text-white border-2 border-white flex items-center justify-center shrink-0 font-black text-xl shadow-[4px_4px_0px_0px_white]">2</div>
+          <div>
+            <h4 class="font-headline-md text-xl mb-1 text-white">Watch it Glow!</h4>
+            <p class="text-zinc-400 font-body-md">The hub lights up in cool colors and changes its voice instantly.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-full bg-tertiary text-black border-2 border-white flex items-center justify-center shrink-0 font-black text-xl shadow-[4px_4px_0px_0px_white]">3</div>
+          <div>
+            <h4 class="font-headline-md text-xl mb-1 text-white">Start Talking!</h4>
+            <p class="text-zinc-400 font-body-md">Ask anything. "Why is the sky blue?" "How do bees fly?" Just chat!</p>
+          </div>
+        </div>
+      </div>
+        <p class="text-center font-bold text-accent-yellow tracking-wide uppercase text-sm mt-lg">✨ Safe &amp; Super Fast AI Magic ✨</p>
+      </div>
+    </section>
+
+    <section class="py-xl bg-white">
+      <div class="content-wrap grid grid-cols-1 gap-8">
+        <div class="p-8 rounded-3xl bg-primary-container border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="p-3 bg-primary rounded-2xl text-white border-2 border-black" aria-hidden="true">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">school</span>
+            </div>
+            <h3 class="font-headline-md text-black">Learns with You!</h3>
+          </div>
+          <p class="font-body-md text-zinc-800 font-medium">Labnlobs knows what you're learning at school and helps you practice through fun games at home.</p>
+        </div>
+        <div class="p-8 rounded-3xl bg-secondary-container border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="p-3 bg-secondary rounded-2xl text-white border-2 border-black" aria-hidden="true">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+            </div>
+            <h3 class="font-headline-md text-black">100% Kid Safe</h3>
+          </div>
+          <p class="font-body-md text-zinc-800 font-medium">Super-secure tech designed just for kids. Parents have full control and peace of mind.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="mission" class="py-xl bg-surface-variant border-t-4 border-black scroll-mt-32">
+      <div class="content-wrap">
+        <div class="text-center mb-lg">
+          <h2 class="font-headline-lg text-headline-lg mb-sm text-black">The Future is Tactile!</h2>
+          <p class="font-body-md text-zinc-700 font-bold">Bringing back the "real" in reality.</p>
+        </div>
+        <div class="grid grid-cols-1 gap-6">
+        <div class="p-8 bg-accent-yellow rounded-3xl border-4 border-black shadow-[6px_6px_0px_0px_black]">
+          <h4 class="font-headline-md text-black mb-2">Curiosity First</h4>
+          <p class="font-body-md text-black font-medium">We don't just give answers, we ask "Why?". Teaching kids to be little scientists and thinkers.</p>
+        </div>
+        <div class="p-8 bg-primary text-white rounded-3xl border-4 border-black shadow-[6px_6px_0px_0px_black]">
+          <h4 class="font-headline-md mb-2">Build Your Collection</h4>
+          <p class="font-medium">Collect all the Lobs! Each one unlocks a new world of knowledge and a new personality to play with.</p>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section id="updates" class="py-xl bg-black text-white border-t-4 border-black scroll-mt-32">
+      <div class="content-wrap">
+        <div class="mx-auto w-full max-w-lg text-center">
+          <h2 class="font-headline-md text-headline-md mb-2">Launch updates &amp; pre-orders</h2>
+          <p class="font-body-md text-zinc-400 mb-8">Leave your email and we will let you know when the waitlist opens. No spam — parents only.</p>
+          <form id="waitlist-form" class="flex flex-col sm:flex-row gap-3 justify-center" novalidate>
+            <label for="email" class="sr-only">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              inputmode="email"
+              placeholder="you@email.com"
+              class="flex-1 min-w-0 rounded-xl border-2 border-zinc-600 bg-zinc-900 px-4 py-3 text-white placeholder-zinc-500 focus:border-accent-yellow focus:ring-0"
+            />
+            <button type="submit" class="bg-primary text-white font-headline-md px-8 py-3 rounded-2xl tactile-press border-4 border-white shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)]">Notify me</button>
+          </form>
+          <p class="text-xs text-zinc-500 mt-6">By continuing you agree to hear about Labnlobs. Wire this form to your list provider when you ship.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="py-xl bg-surface-variant">
+      <div class="content-wrap">
+        <a href="#updates" class="block w-full text-center bg-primary text-white py-5 rounded-2xl font-headline-md tactile-press border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">Secure Your Pre-order! 🚀</a>
+      </div>
+    </div>
+
+    <footer class="bg-zinc-100 border-t-4 border-black">
+      <div class="content-wrap flex flex-col md:flex-row justify-between items-start gap-8 py-12">
+        <div class="space-y-4">
+          <span class="text-2xl font-black text-black italic">LABNLOBS</span>
+          <p class="font-body-md text-xs leading-relaxed text-zinc-600 font-bold">© 2026 Labnlobs. Real play for the next generation.</p>
+        </div>
+        <div class="flex flex-wrap gap-x-6 gap-y-4">
+          <a class="font-bold text-xs text-black hover:text-primary transition-colors underline decoration-2 underline-offset-4" href="#product">Product</a>
+          <a class="font-bold text-xs text-black hover:text-primary transition-colors underline decoration-2 underline-offset-4" href="#mission">Mission</a>
+          <a class="font-bold text-xs text-black hover:text-primary transition-colors underline decoration-2 underline-offset-4" href="mailto:hello@labnlobs.com">Contact</a>
+          <a class="font-bold text-xs text-black hover:text-primary transition-colors underline decoration-2 underline-offset-4" href="#updates">Updates</a>
+          <a class="font-bold text-xs text-black hover:text-primary transition-colors underline decoration-2 underline-offset-4" href="#">Privacy</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <div class="fixed bottom-6 right-6 z-[60] md:hidden">
+    <a href="#updates" class="w-16 h-16 bg-accent-yellow text-black border-4 border-black rounded-full shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center tactile-press" aria-label="Open waitlist">
+      <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+    </a>
+  </div>
+  <script>
+    (function () {
+      var f = document.getElementById("waitlist-form");
+      var i = document.getElementById("email");
+      if (f && i) {
+        f.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!i.value || !i.checkValidity()) {
+            i.reportValidity();
+            return;
+          }
+          var body = "Please add me to the waitlist. Email: " + i.value;
+          location.href = "mailto:hello@labnlobs.com?subject=" + encodeURIComponent("Labnlobs waitlist") + "&body=" + encodeURIComponent(body);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
