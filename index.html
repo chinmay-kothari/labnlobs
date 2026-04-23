@@ -119,11 +119,11 @@
 
   <nav class="fixed top-16 w-full z-40 bg-white border-b border-zinc-100 overflow-x-auto no-scrollbar whitespace-nowrap" aria-label="Section">
     <div class="content-wrap flex items-center gap-6 h-12">
-      <a class="text-sm font-bold text-primary border-b-2 border-primary pb-3 mt-3" href="#hero">All</a>
-      <a class="text-sm font-medium text-zinc-500 hover:text-black transition-colors" href="#product">Product</a>
-      <a class="text-sm font-medium text-zinc-500 hover:text-black transition-colors" href="#mission">Mission</a>
-      <a class="text-sm font-medium text-zinc-500 hover:text-black transition-colors" href="#lobs">Lobs</a>
-      <a class="text-sm font-medium text-zinc-500 hover:text-black transition-colors" href="#updates">Updates</a>
+      <a class="js-nav-item text-sm font-bold text-primary border-b-2 border-primary pb-3 mt-3" href="#hero" data-nav-section="hero" aria-current="true">All</a>
+      <a class="js-nav-item text-sm font-medium text-zinc-500 border-b-2 border-transparent hover:text-black transition-colors pb-3 mt-3" href="#product" data-nav-section="product">Product</a>
+      <a class="js-nav-item text-sm font-medium text-zinc-500 border-b-2 border-transparent hover:text-black transition-colors pb-3 mt-3" href="#mission" data-nav-section="mission">Mission</a>
+      <a class="js-nav-item text-sm font-medium text-zinc-500 border-b-2 border-transparent hover:text-black transition-colors pb-3 mt-3" href="#lobs" data-nav-section="lobs">Lobs</a>
+      <a class="js-nav-item text-sm font-medium text-zinc-500 border-b-2 border-transparent hover:text-black transition-colors pb-3 mt-3" href="#updates" data-nav-section="updates">Updates</a>
     </div>
   </nav>
 
@@ -279,22 +279,40 @@
       <div class="content-wrap">
         <div class="mx-auto w-full max-w-lg text-center">
           <h2 class="font-headline-md text-headline-md mb-2">Launch updates &amp; pre-orders</h2>
-          <p class="font-body-md text-zinc-400 mb-8">Leave your email and we will let you know when the waitlist opens. No spam — parents only.</p>
-          <form id="waitlist-form" class="flex flex-col sm:flex-row gap-3 justify-center" novalidate>
-            <label for="email" class="sr-only">Email</label>
+          <p class="font-body-md text-zinc-400 mb-8">Add your name and email and we will let you know when the waitlist opens. No spam — parents only.</p>
+          <form id="waitlist-form" class="flex w-full max-w-md mx-auto flex-col gap-3 text-left" novalidate>
+            <label for="name" class="sr-only">Name</label>
             <input
-              id="email"
-              name="email"
-              type="email"
+              id="name"
+              name="name"
+              type="text"
               required
-              autocomplete="email"
-              inputmode="email"
-              placeholder="you@email.com"
-              class="flex-1 min-w-0 rounded-xl border-2 border-zinc-600 bg-zinc-900 px-4 py-3 text-white placeholder-zinc-500 focus:border-accent-yellow focus:ring-0"
+              autocomplete="name"
+              placeholder="Your name"
+              class="w-full rounded-xl border-2 border-zinc-600 bg-zinc-900 px-4 py-3 text-white placeholder-zinc-500 focus:border-accent-yellow focus:ring-0"
             />
-            <button type="submit" class="bg-primary text-white font-headline-md px-8 py-3 rounded-2xl tactile-press border-4 border-white shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)]">Notify me</button>
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:gap-3">
+              <label for="email" class="sr-only">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                autocomplete="email"
+                inputmode="email"
+                placeholder="Your email"
+                class="min-w-0 flex-1 rounded-xl border-2 border-zinc-600 bg-zinc-900 px-4 py-3 text-white placeholder-zinc-500 focus:border-accent-yellow focus:ring-0"
+              />
+              <button id="waitlist-submit" type="submit" class="w-full shrink-0 bg-primary text-white font-headline-md px-8 py-3 rounded-2xl tactile-press border-4 border-white shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] sm:w-auto sm:self-stretch sm:px-6">Notify me</button>
+            </div>
           </form>
-          <p class="text-xs text-zinc-500 mt-6">By continuing you agree to hear about Labnlobs. Wire this form to your list provider when you ship.</p>
+          <div
+            id="waitlist-notice"
+            class="mx-auto mt-4 hidden w-full max-w-md rounded-2xl border-2 px-4 py-3 text-center text-body-md font-medium"
+            role="status"
+            aria-live="polite"
+          ></div>
+          <p class="text-xs text-zinc-500 mt-6">By continuing you agree to hear from Labnlobs about launch updates.</p>
         </div>
       </div>
     </section>
@@ -327,22 +345,185 @@
       <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
     </a>
   </div>
+  <!--
+    Secrets: use .env locally (see .env.example) then run: npm run build
+    The build writes gitignored config.js. On your host, set the same variable names in Environment variables and use build command: npm run build
+    Supabase: public anon key + Project URL; table with name, email + RLS allow INSERT for anon.
+  -->
+  <script>
+    window.__APP_ENV__ = {
+      SUPABASE_URL: "",
+      SUPABASE_ANON_KEY: "",
+      SUPABASE_TABLE: "email"
+    };
+  </script>
+  <script src="config.js"></script>
   <script>
     (function () {
-      var f = document.getElementById("waitlist-form");
-      var i = document.getElementById("email");
-      if (f && i) {
-        f.addEventListener("submit", function (e) {
-          e.preventDefault();
-          if (!i.value || !i.checkValidity()) {
-            i.reportValidity();
-            return;
+      var NAV_IDS = ["hero", "product", "lobs", "mission", "updates"];
+      var activeCls =
+        "js-nav-item text-sm font-bold text-primary border-b-2 border-primary pb-3 mt-3";
+      var idleCls =
+        "js-nav-item text-sm font-medium text-zinc-500 border-b-2 border-transparent hover:text-black transition-colors pb-3 mt-3";
+      var ignoreScrollUntil = 0;
+
+      function setActiveNav(sectionId) {
+        if (NAV_IDS.indexOf(sectionId) === -1) return;
+        var items = document.querySelectorAll(
+          'nav[aria-label="Section"] a.js-nav-item'
+        );
+        items.forEach(function (link) {
+          if (link.getAttribute("data-nav-section") === sectionId) {
+            link.className = activeCls;
+            link.setAttribute("aria-current", "true");
+          } else {
+            link.className = idleCls;
+            link.removeAttribute("aria-current");
           }
-          var body = "Please add me to the waitlist. Email: " + i.value;
-          location.href = "mailto:hello@labnlobs.com?subject=" + encodeURIComponent("Labnlobs waitlist") + "&body=" + encodeURIComponent(body);
         });
       }
+
+      function getSectionFromScroll() {
+        var y = window.scrollY + 200;
+        for (var i = NAV_IDS.length - 1; i >= 0; i--) {
+          var el = document.getElementById(NAV_IDS[i]);
+          if (el && y >= el.offsetTop) return NAV_IDS[i];
+        }
+        return "hero";
+      }
+
+      function onScroll() {
+        if (Date.now() < ignoreScrollUntil) return;
+        setActiveNav(getSectionFromScroll());
+      }
+
+      document.addEventListener(
+        "click",
+        function (e) {
+          var a = e.target.closest('a[href^="#"]');
+          if (!a) return;
+          var id = a.getAttribute("href");
+          if (!id || id.length < 2) return;
+          id = id.slice(1);
+          if (document.getElementById(id) && NAV_IDS.indexOf(id) >= 0) {
+            ignoreScrollUntil = Date.now() + 700;
+            setActiveNav(id);
+          }
+        },
+        true
+      );
+
+      var scrollRaf;
+      window.addEventListener(
+        "scroll",
+        function () {
+          if (Date.now() < ignoreScrollUntil) return;
+          if (scrollRaf) return;
+          scrollRaf = requestAnimationFrame(function () {
+            scrollRaf = 0;
+            onScroll();
+          });
+        },
+        { passive: true }
+      );
+
+      window.addEventListener("hashchange", function () {
+        var id = (location.hash || "#hero").slice(1);
+        if (NAV_IDS.indexOf(id) >= 0) {
+          ignoreScrollUntil = Date.now() + 700;
+          setActiveNav(id);
+        }
+      });
+
+      function initNav() {
+        setActiveNav(getSectionFromScroll());
+        setTimeout(function () {
+          setActiveNav(getSectionFromScroll());
+        }, 100);
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initNav);
+      } else {
+        initNav();
+      }
     })();
+  </script>
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const env = typeof window !== "undefined" ? window.__APP_ENV__ : null;
+    const supabaseUrl = env?.SUPABASE_URL;
+    const supabaseKey = env?.SUPABASE_ANON_KEY;
+    const tableName = env?.SUPABASE_TABLE || "email";
+    const missingConfig = !supabaseUrl || !supabaseKey;
+    const supabase = missingConfig
+      ? null
+      : createClient(supabaseUrl, supabaseKey);
+    const form = document.getElementById("waitlist-form");
+    const noticeEl = document.getElementById("waitlist-notice");
+    const submitBtn = document.getElementById("waitlist-submit");
+
+    function setNotice(msg, kind) {
+      if (!noticeEl) return;
+      noticeEl.classList.remove("hidden");
+      noticeEl.textContent = msg;
+      noticeEl.className =
+        "mx-auto mt-4 w-full max-w-md rounded-2xl border-2 px-4 py-3 text-center text-body-md font-medium " +
+        (kind === "error"
+          ? "border-error bg-zinc-900/90 text-zinc-100"
+          : kind === "success"
+            ? "border-tertiary bg-zinc-900/80 text-tertiary"
+            : "border-zinc-500 bg-zinc-900/50 text-zinc-300");
+    }
+
+    function hideNotice() {
+      if (!noticeEl) return;
+      noticeEl.classList.add("hidden");
+      noticeEl.textContent = "";
+    }
+
+    if (form) {
+      if (missingConfig) {
+        setNotice(
+          "Set SUPABASE_URL and SUPABASE_ANON_KEY in a .env file (see .env.example), then run npm run build. For hosting, set the same variable names in your provider and run the build there.",
+          "error"
+        );
+      }
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        hideNotice();
+        if (missingConfig) {
+          setNotice(
+            "Not connected to Supabase yet. Add credentials via .env or your host, then run npm run build.",
+            "error"
+          );
+          return;
+        }
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        setNotice("Saving your spot…", "loading");
+        if (submitBtn) submitBtn.disabled = true;
+        const { error } = await supabase.from(tableName).insert({ name, email });
+        if (submitBtn) submitBtn.disabled = false;
+        if (error) {
+          if (error.code === "23505") {
+            setNotice("This email is already on the list.", "error");
+            return;
+          }
+          setNotice(error.message || "Could not save. Please try again.", "error");
+          return;
+        }
+        form.reset();
+        setNotice(
+          "You will be notified about launch updates. Thanks, we have saved your details.",
+          "success"
+        );
+      });
+    }
   </script>
 </body>
 </html>
